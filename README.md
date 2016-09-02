@@ -9,9 +9,12 @@ These files do not run on a normal webserver. They are specifically intended to 
 You will need the Google App Engine SDK for python and a Google Cloud Console account. For a tutorial visit this page: http://appinventor.mit.edu/explore/content/custom-tinywebdb-service.html
 
 
+### Python version:
+2.7
 
-### Python version: 2.7
-### Django version: 1.2
+### Django version:
+1.2
+
 
 ## Hint
 
