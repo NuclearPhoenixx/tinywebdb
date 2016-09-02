@@ -1,0 +1,84 @@
+<html>
+<head>
+
+
+	<style type="text/css">
+        body {margin-left: 5% ; margin-right: 5%; margin-top: 0.5in;
+             font-family: verdana, arial,"trebuchet ms", helvetica, sans-serif;}
+        ul {list-style: disc;}
+     </style>
+		
+	<title>TinyWebDB</title>
+	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
+	 
+</head>
+<body>
+
+	<p><img src="images/logo.png" style="float: right" width="380" height="300" alt="Logo"></p><br/>
+	<h3> <u>Custom TinyWebDB</u> </h3>
+		<br>
+	<p><b>This is a custom TinyWebDB for AppInventor 2.</b></p>
+
+	<br><br><br><br><br><br>
+	
+	<h3> GET TAG </h3>
+    <form action="/getvalue" method="post"
+          enctype=application/x-www-form-urlencoded>
+       <p>Tag:<input type="text" name="tag" size="30"/></p>
+       <input type="hidden" name="fmt" value="html">
+       <input type="submit" value="Get value">
+    </form>
+   
+    TAG VALUE: 
+	<b>{{result}}</b>
+
+	<br><br>
+	<hr>
+	<br>
+	
+	<h3>STORE VALUE</h3>
+	<form action="/storeavalue" method="post"
+		  enctype=application/x-www-form-urlencoded>
+	   <p>Tag:   <input type="text" name="tag" size="30"/></p>
+	   <p>Value: <input type="text" name="value" size="30"/></p>
+	   <input type="hidden" name="fmt" value="html">
+	   <input type="submit" value="Store Value">
+	</form>
+ 
+	<br>
+	<hr>
+	<br>
+ 
+	<table border=3>
+	  <tr>
+		 <th>Tag</th>
+		 <th>Value</th>
+		 <th>Created (GMT)</th>
+	  </tr>
+	  {% for entry in entryList %}
+	  <tr>
+			
+			<td>{{entry.tag}}</td>
+		<td>{{entry.value}}</td>
+		<td><font size="-1">{{entry.date}}</font></td>
+          
+	  	<td><form action="/deleteentry" method="post"
+			enctype=application/x-www-form-urlencoded>
+		<input type="hidden" name="entry_key_string" value="{{entry.key}}">
+		<input type="hidden" name="tag" value="{{entry.tag}}">
+			<input type="hidden" name="fmt" value="html">
+		<input type="submit" style="background-color: red" value="Delete"></form></td>
+          </tr>
+	  {% endfor %}
+	  
+	  
+	</table>
+	
+	<br><br><br><br><br><br/>
+	 
+	Version 1.1 | 2016. Powered by <a href="http://aperturegds.tk/">Aperture Diversion</a>.
+	
+	
+</body>
+
+</html>
