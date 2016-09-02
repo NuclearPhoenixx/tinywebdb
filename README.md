@@ -13,7 +13,7 @@ You will need the Google App Engine SDK for python and a Google Cloud Console ac
 
 #### Django version: 1.2
 
-
+-------------------------
 ## Hint
 
 "TinyWebDB" let's you run the service with a web interface, but be careful! Everyone knowing the URL could possibly alter data.
