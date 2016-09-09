@@ -11,7 +11,7 @@ You will need the Google App Engine SDK for python and a Google Cloud Console ac
 
 #### Python version: 2.7
 
-#### Django version: 1.2
+#### Django version: 1.5
 
 -------------------------
 ## Hint
