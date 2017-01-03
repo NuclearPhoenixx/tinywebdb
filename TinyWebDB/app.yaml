@@ -11,6 +11,7 @@ libraries:
 handlers:
 - url: /images
   static_dir: images
+  secure: always
 
 - url: .*
   script: main.app
