@@ -1,41 +1,32 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-
-	<script async defer src="https://buttons.github.io/buttons.js"></script>
-
 	<style type="text/css">
-        body {margin-left: 5% ; margin-right: 5%; margin-top: 0.5in;
-             font-family: verdana, arial,"trebuchet ms", helvetica, sans-serif;}
-        ul {list-style: disc;}
-     </style>
-		
+		body{margin-left:5%;margin-right:5%;margin-top:2%;font-family:sans-serif,verdana,arial}
+		ul{list-style:disc}
+		a{text-decoration:none}
+		a:hover{text-decoration:underline}
+	</style>
 	<title>TinyWebDB</title>
 	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
-	 
 </head>
 <body>
-
-	<p><img src="images/logo.png" style="float: right" width="380" height="300" alt="Logo"></p><br/>
-	<h3> <u>Custom TinyWebDB</u> </h3>
-		<br>
-	<p><b>This is a custom TinyWebDB for AppInventor 2.</b></p>
-
+	<p><img src="images/logo.png" style="float:right" width="380" height="300" alt="Logo"></p><br>
+	<h2><u>Custom TinyWebDB</u></h2>
+	<br>
+	<p><b>This is your custom TinyWebDB for AppInventor 2!</b></p>
 	<br><br><br><br><br><br>
-	
-	<h3> GET TAG </h3>
-    <form action="/getvalue" method="post"
-          enctype=application/x-www-form-urlencoded>
+	<h3>GET TAG</h3>
+    <form action="/getvalue" method="post" enctype=application/x-www-form-urlencoded>
        <p>Tag:<input type="text" name="tag" size="30"/></p>
        <input type="hidden" name="fmt" value="html">
        <input type="submit" value="Get value">
     </form>
-   
+	<br>
+	
     TAG VALUE: 
 	<b>{{result}}</b>
-
-	<br><br>
-	<hr>
-	<br>
+	<br><br><hr><br>
 	
 	<h3>STORE VALUE</h3>
 	<form action="/storeavalue" method="post"
@@ -45,11 +36,7 @@
 	   <input type="hidden" name="fmt" value="html">
 	   <input type="submit" value="Store Value">
 	</form>
- 
-	<br>
-	<hr>
-	<br>
- 
+	<br><hr><br>
 	<table border=3>
 	  <tr>
 		 <th>Tag</th>
@@ -58,33 +45,24 @@
 	  </tr>
 	  {% for entry in entryList %}
 	  <tr>
-			
-			<td>{{entry.tag}}</td>
+		<td>{{entry.tag}}</td>
 		<td>{{entry.value}}</td>
 		<td><font size="-1">{{entry.date}}</font></td>
-          
-	  	<td><form action="/deleteentry" method="post"
-			enctype=application/x-www-form-urlencoded>
-		<input type="hidden" name="entry_key_string" value="{{entry.key}}">
-		<input type="hidden" name="tag" value="{{entry.tag}}">
+	  	<td>
+			<form action="/deleteentry" method="post" enctype=application/x-www-form-urlencoded>
+			<input type="hidden" name="entry_key_string" value="{{entry.key}}">
+			<input type="hidden" name="tag" value="{{entry.tag}}">
 			<input type="hidden" name="fmt" value="html">
-		<input type="submit" style="background-color: red" value="Delete"></form></td>
-          </tr>
+			<input type="submit" style="background-color: red" value="Delete">
+			</form>
+		</td>
+	  </tr>
 	  {% endfor %}
-	  
-	  
 	</table>
 	
-	<br><br><br><br><br><br/>
-	 
-	<div style="height:5%; position:relativ; bottom:0px;">
-	Version 2 | 2016. Powered by <a href="http://apertured.tk/">Aperture Diversion</a>.
-		<div style="float:right;">
-		<a class="github-button" href="https://github.com/aperture-diversion/tinywebdb" data-icon="octicon-star" data-style="mega" data-count-href="/aperture-diversion/tinywebdb/stargazers" data-count-api="/repos/aperture-diversion/tinywebdb#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star tinywebdb on GitHub">Star</a>
-		</div>
+	<br><br><br><br><br><br>
+	<div style="position:absolute;bottom:5px;float:left">
+		<a href="https://github.com/aperture-diversion/tinywebdb">Version 3</a> ~ 2017 | Powered by <a href="//apertured.tk">Aperture Diversion</a>.
 	</div>
-	
-	
 </body>
-
 </html>
