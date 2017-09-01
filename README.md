@@ -18,6 +18,6 @@ If you want to use Google App Engine's infrastructure, you will also need the Go
 -------------------------
 ## Hint
 
->```TinyWebDB``` let's you run the service with a web interface, but be careful since everyone knowing the URL could easily alter your data!
+```TinyWebDB``` let's you run the service with a web interface, but be careful since everyone knowing the URL could easily alter your data!
 
->```TinyWebDB no_interface``` let's you run the same service, but without any web interface at all. That means everything has to be done over the Google Cloud Console. The advantage is that you don't have to care about the web frontend.
+```TinyWebDB no_interface``` let's you run the same service, but without any web interface at all. That means everything has to be done over the Google Cloud Console. The advantage is that you don't have to care about the web frontend.
