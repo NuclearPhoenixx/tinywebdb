@@ -1,5 +1,9 @@
 # Changelog:
 
+v.5 (1 September 2017)
+* Updated Django to 1.11
+* Some fixes
+
 v.4 (15 August 2017)
 * Changed branding
 

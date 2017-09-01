@@ -1,12 +1,12 @@
 application: tinywebdb
-version: 3
+version: 5
 runtime: python27
 api_version: 1
 threadsafe: true
 
 libraries:
 - name: django
-  version: "1.5"
+  version: "1.11"
 
 handlers:
 - url: /images
