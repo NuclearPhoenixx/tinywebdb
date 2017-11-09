@@ -15,7 +15,7 @@ If you want to use Google App Engine's infrastructure, you will also need the Go
 
 #### Python version: 2.7 (latest compatible version)
 
-#### Django version: 1.11 (latest compatible version)
+#### Django version: 1.11 (latest version)
 
 -------------------------
 ## Hint
