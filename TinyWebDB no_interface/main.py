@@ -7,6 +7,7 @@
 ### Author: Dave Wolber via template of Hal Abelson and incorporating changes of Dean Sanvitale
 
 ### Note-- updated for use with Python2.7 in App Engine, June 2013
+### Note-- updated for use with Django 1.11 in App Engine, September 2017
 
 import webapp2
 
