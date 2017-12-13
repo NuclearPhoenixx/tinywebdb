@@ -12,10 +12,9 @@
 ###
 from webapp2 import RequestHandler, WSGIApplication
 from google.appengine.ext import db
-#from google.appengine.ext import webapp
-#from google.appengine.ext.webapp.util import run_wsgi_app
-#from google.appengine.ext.db import Key
+from google.appengine.ext.webapp import template
 
+from os import path as Path
 from json import dump
 from re import compile
 from htmlentitydefs import name2codepoint
@@ -66,6 +65,13 @@ class GetValueHandler(RequestHandler):
     self.get_value(tag)
 
 
+### INDEX PAGE
+class MainPage(RequestHandler):
+
+  def get(self):
+	path = Path.join(Path.dirname(__file__),'index.html')
+	self.response.out.write(template.render(path, 1))
+
 ### Utilty procedures for generating the output
 def WriteToPhone(handler,tag,value):
     handler.response.headers['Content-Type'] = 'application/jsonrequest'
@@ -83,10 +89,8 @@ def store(tag, value, bCheckIfTagExists=True):
 		entry = db.GqlQuery("SELECT * FROM StoredData where tag = :1", tag).get()
 		if entry:
 		  entry.value = value
-		else: 
-          entry = StoredData(tag = tag, value = value)
-	else:
-		entry = StoredData(tag = tag, value = value)
+		else: entry = StoredData(tag = tag, value = value)
+	else: entry = StoredData(tag = tag, value = value)
 	entry.put()		
 
 def trimdb():
@@ -144,6 +148,7 @@ def ProcessNode(node, sPath):
 
 
 ### Assign the classes to the URL's
-app = WSGIApplication ([('/getvalue', GetValueHandler),
+app = WSGIApplication ([('/', MainPage),
+						('/getvalue', GetValueHandler),
                         ('/storeavalue', StoreAValue)
                         ])
