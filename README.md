@@ -1,19 +1,8 @@
-# tinywebdb
-![GitHub last commit](https://img.shields.io/github/last-commit/phoenix1747/tinywebdb.svg?style=flat-square) ![open issues](https://img.shields.io/github/issues-raw/phoenix1747/tinywebdb.svg?style=flat-square) ![license](https://img.shields.io/github/license/phoenix1747/tinywebdb.svg?style=flat-square)
+# tinywebdb dev
+![GitHub last commit](https://img.shields.io/github/last-commit/phoenix1747/tinywebdb/dev.svg?style=flat-square) ![open issues](https://img.shields.io/github/issues-raw/phoenix1747/tinywebdb.svg?style=flat-square) ![license](https://img.shields.io/github/license/phoenix1747/tinywebdb.svg?style=flat-square)
 
-These are the files necessary for running a custom TinyWebDB for the MIT AppInventor 2.
-
-## Requirements
-
-These files do not run on a normal webserver - you would need to have a python framework with Django running. In additon they depend on some Google App Engine and Webapp libraries.
-
-They are specifically intended to run on a Google App Engine Server, just like the original code by the App Inventor guys from MIT.
-
-If you want to use Google App Engine's infrastructure, you will also need the Google App Engine SDK for python and a Google Cloud Console account. You'll have to edit the files according to your needs and then upload the files with the SDK software. You can find a tutorial here: [http://appinventor.mit.edu/explore/content/custom-tinywebdb-service.html](http://appinventor.mit.edu/explore/content/custom-tinywebdb-service.html).
-
-**Python version: 2.7 (latest compatible version)**
-
-**Django version: 1.11 (latest version)**
+This is the development branch for the custom TinyWebDB. I'm making potentially unstable changes here, so if you want to have a stable TinyWebDB, please download the files from the stable ```master``` branch.
+If, after testing, these files prove to be stable enough, I will merge them into master.
 
 ---
 ## Directories
