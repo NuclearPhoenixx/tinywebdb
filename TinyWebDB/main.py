@@ -16,7 +16,6 @@ from google.appengine.ext import db
 #from google.appengine.ext.webapp.util import run_wsgi_app
 #from google.appengine.ext.db import Key
 
-#import urllib
 from os import path
 from google.appengine.ext.webapp import template
 from json import dump

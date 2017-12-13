@@ -16,11 +16,7 @@ from google.appengine.ext import db
 #from google.appengine.ext.webapp.util import run_wsgi_app
 #from google.appengine.ext.db import Key
 
-#import urllib
-from os import path
-from google.appengine.ext.webapp import template
 from json import dump
-from logging import debug
 from re import compile
 from htmlentitydefs import name2codepoint
 
@@ -46,30 +42,12 @@ class StoreAValue(RequestHandler):
 	## the message (other than to note that it was received), but other
 	## components might use this.
 	result = ["STORED", tag, value]
-	
-	if self.request.get('fmt') == "html":
-		WriteToWeb(self,tag,value)
-	else:
-		WriteToPhoneAfterStore(self,tag,value)
+	WriteToPhoneAfterStore(self,tag,value)
 
   def post(self):
 	tag = self.request.get('tag')
 	value = self.request.get('value')
 	self.store_a_value(tag, value)
-
-
-class DeleteEntry(RequestHandler):
-
-  def post(self):
-	debug('/deleteentry?%s\n|%s|' %
-				  (self.request.query_string, self.request.body))
-	entry_key_string = self.request.get('entry_key_string')
-	key = db.Key(entry_key_string)
-	tag = self.request.get('tag')
-	if tag.startswith("http"):
-	  DeleteUrl(tag)
-	db.run_in_transaction(dbSafeDelete,key)
-	self.redirect('/')
 
 
 class GetValueHandler(RequestHandler):
@@ -78,33 +56,14 @@ class GetValueHandler(RequestHandler):
     entry = db.GqlQuery("SELECT * FROM StoredData where tag = :1", tag).get()
     if entry:
         value = entry.value
-    else: value = ""
-  
-    if self.request.get('fmt') == "html":
-    	WriteToWeb(self,tag,value )
     else:
-        WriteToPhone(self,tag,value)
+        value = ""
+  
+    WriteToPhone(self,tag,value)
 
   def post(self):
     tag = self.request.get('tag')
     self.get_value(tag)
-
-  # there is a web ui for this as well, here is the get
-  def get(self):
-    # this did pump out the form
-    template_values={}
-    path = path.join(path.dirname(__file__),'index.html')
-    self.response.out.write(template.render(path,template_values))
-
-
-class MainPage(RequestHandler):
-
-  def get(self):
-    entries = db.GqlQuery("SELECT * FROM StoredData ORDER BY date desc")
-    template_values = {"entryList":entries}
-    # render the page using the template engine
-    path = path.join(path.dirname(__file__),'index.html')
-    self.response.out.write(template.render(path,template_values))
 
 
 ### Utilty procedures for generating the output
@@ -112,22 +71,12 @@ def WriteToPhone(handler,tag,value):
     handler.response.headers['Content-Type'] = 'application/jsonrequest'
     dump(["VALUE", tag, value], handler.response.out)
 
-def WriteToWeb(handler, tag,value):
-    entries = db.GqlQuery("SELECT * FROM StoredData ORDER BY date desc")
-    template_values={"result":  value,"entryList":entries}  
-    path = path.join(path.dirname(__file__),'index.html')
-    handler.response.out.write(template.render(path,template_values))
-
 def WriteToPhoneAfterStore(handler,tag, value):
     handler.response.headers['Content-Type'] = 'application/jsonrequest'
     dump(["STORED", tag, value], handler.response.out)
 
 
-### db utilities from Dean
-### A utility that guards against attempts to delete a non-existent object
-def dbSafeDelete(key):
-  if db.get(key) :	db.delete(key)
-  
+### db utilities from Dean  
 def store(tag, value, bCheckIfTagExists=True):
 	if bCheckIfTagExists:
 		# There's a potential readers/writers error here :(
@@ -139,7 +88,7 @@ def store(tag, value, bCheckIfTagExists=True):
 	else:
 		entry = StoredData(tag = tag, value = value)
 	entry.put()		
-	
+
 def trimdb():
 	## If there are more than the max number of entries, flush the
 	## earliest entries.
@@ -192,15 +141,9 @@ def ProcessNode(node, sPath):
 				if (childCounts[sTag] <= 5):
 					entries.extend(ProcessNode(childNode, sPath + ">" + sTag + str(childCounts[sTag])))
 		return entries
-		
-def DeleteUrl(sUrl):
-	entries = StoredData.all().filter('tag >=', sUrl).filter('tag <', sUrl + u'\ufffd')
-	db.delete(entries[:500])
 
 
 ### Assign the classes to the URL's
-app = WSGIApplication ([('/', MainPage),
-                        ('/getvalue', GetValueHandler),
-                        ('/storeavalue', StoreAValue),
-                        ('/deleteentry', DeleteEntry)
+app = WSGIApplication ([('/getvalue', GetValueHandler),
+                        ('/storeavalue', StoreAValue)
                         ])
