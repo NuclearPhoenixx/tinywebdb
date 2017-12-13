@@ -12,11 +12,8 @@
 ###
 from webapp2 import RequestHandler, WSGIApplication
 from google.appengine.ext import db
-#from google.appengine.ext import webapp
-#from google.appengine.ext.webapp.util import run_wsgi_app
-#from google.appengine.ext.db import Key
 
-from os import path
+from os import path as Path
 from google.appengine.ext.webapp import template
 from json import dump
 from logging import debug
@@ -92,7 +89,7 @@ class GetValueHandler(RequestHandler):
   def get(self):
     # this did pump out the form
     template_values={}
-    path = path.join(path.dirname(__file__),'index.html')
+    path = Path.join(Path.dirname(__file__),'index.html')
     self.response.out.write(template.render(path,template_values))
 
 
@@ -102,7 +99,7 @@ class MainPage(RequestHandler):
     entries = db.GqlQuery("SELECT * FROM StoredData ORDER BY date desc")
     template_values = {"entryList":entries}
     # render the page using the template engine
-    path = path.join(path.dirname(__file__),'index.html')
+    path = Path.join(Path.dirname(__file__),'index.html')
     self.response.out.write(template.render(path,template_values))
 
 
@@ -114,7 +111,7 @@ def WriteToPhone(handler,tag,value):
 def WriteToWeb(handler, tag,value):
     entries = db.GqlQuery("SELECT * FROM StoredData ORDER BY date desc")
     template_values={"result":  value,"entryList":entries}  
-    path = path.join(path.dirname(__file__),'index.html')
+    path = Path.join(Path.dirname(__file__),'index.html')
     handler.response.out.write(template.render(path,template_values))
 
 def WriteToPhoneAfterStore(handler,tag, value):
@@ -133,10 +130,8 @@ def store(tag, value, bCheckIfTagExists=True):
 		entry = db.GqlQuery("SELECT * FROM StoredData where tag = :1", tag).get()
 		if entry:
 		  entry.value = value
-		else: 
-          entry = StoredData(tag = tag, value = value)
-	else:
-		entry = StoredData(tag = tag, value = value)
+		else: entry = StoredData(tag = tag, value = value)
+	else: entry = StoredData(tag = tag, value = value)
 	entry.put()		
 	
 def trimdb():
