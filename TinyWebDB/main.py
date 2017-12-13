@@ -1,41 +1,41 @@
 #!/usr/bin/env python
 ###
-### This web service is used in conjunction with App
-### Inventor for Android. It stores and retrieves data as instructed by an App Inventor app and its TinyWebDB component.
-### It also provides a web interface to the database for administration
-
-### Author: Dave Wolber via template of Hal Abelson and incorporating changes of Dean Sanvitale
-
+### This web service is used in conjunction with App Inventor for Android.
+### It stores and retrieves data as instructed by an App Inventor app and its TinyWebDB component.
+### It also provides a web interface to the database for administration.
+###
+### Original author: Dave Wolber via template of Hal Abelson and incorporating changes of Dean Sanvitale
+### Maintainer: Phoenix1747 on GitHub
+###
 ### Note-- updated for use with Python2.7 in App Engine, June 2013
 ### Note-- updated for use with Django 1.11 in App Engine, September 2017
-
-import webapp2
-
-import logging
-from google.appengine.ext import webapp
-from google.appengine.ext.webapp.util import run_wsgi_app
+###
+from webapp2 import RequestHandler, WSGIApplication
 from google.appengine.ext import db
-from google.appengine.ext.db import Key
-import json
+#from google.appengine.ext import webapp
+#from google.appengine.ext.webapp.util import run_wsgi_app
+#from google.appengine.ext.db import Key
 
-# DWW
-import os
+#import urllib
+from os import path
 from google.appengine.ext.webapp import template
-import urllib
+from json import dump
+from logging import debug
+from re import compile
+from htmlentitydefs import name2codepoint
 
-# DEAN
-import logging
-import re
 
+### Max entries for trimdb()
 max_entries = 1000
 
+### Now come some classes
 class StoredData(db.Model):
   tag = db.StringProperty()
   value = db.TextProperty()
   date = db.DateTimeProperty(required=True, auto_now=True)
 
 
-class StoreAValue(webapp2.RequestHandler):
+class StoreAValue(RequestHandler):
 
   def store_a_value(self, tag, value):
   	store(tag, value)
@@ -47,25 +47,21 @@ class StoreAValue(webapp2.RequestHandler):
 	## components might use this.
 	result = ["STORED", tag, value]
 	
-	## When I first implemented this, I used  json.JSONEncoder().encode(value)
-	## rather than json.dump.  That didn't work: the component ended up
-	## seeing extra quotation marks.  Maybe someone can explain this to me.
-	
 	if self.request.get('fmt') == "html":
 		WriteToWeb(self,tag,value)
 	else:
 		WriteToPhoneAfterStore(self,tag,value)
-	
 
   def post(self):
 	tag = self.request.get('tag')
 	value = self.request.get('value')
 	self.store_a_value(tag, value)
 
-class DeleteEntry(webapp2.RequestHandler):
+
+class DeleteEntry(RequestHandler):
 
   def post(self):
-	logging.debug('/deleteentry?%s\n|%s|' %
+	debug('/deleteentry?%s\n|%s|' %
 				  (self.request.query_string, self.request.body))
 	entry_key_string = self.request.get('entry_key_string')
 	key = db.Key(entry_key_string)
@@ -76,19 +72,18 @@ class DeleteEntry(webapp2.RequestHandler):
 	self.redirect('/')
 
 
-class GetValueHandler(webapp2.RequestHandler):
+class GetValueHandler(RequestHandler):
 
   def get_value(self, tag):
-
     entry = db.GqlQuery("SELECT * FROM StoredData where tag = :1", tag).get()
     if entry:
-       value = entry.value
+        value = entry.value
     else: value = ""
   
     if self.request.get('fmt') == "html":
     	WriteToWeb(self,tag,value )
     else:
-	WriteToPhone(self,tag,value)
+        WriteToPhone(self,tag,value)
 
   def post(self):
     tag = self.request.get('tag')
@@ -98,41 +93,37 @@ class GetValueHandler(webapp2.RequestHandler):
   def get(self):
     # this did pump out the form
     template_values={}
-    path = os.path.join(os.path.dirname(__file__),'index.html')
+    path = path.join(path.dirname(__file__),'index.html')
     self.response.out.write(template.render(path,template_values))
 
 
-class MainPage(webapp2.RequestHandler):
+class MainPage(RequestHandler):
 
   def get(self):
     entries = db.GqlQuery("SELECT * FROM StoredData ORDER BY date desc")
     template_values = {"entryList":entries}
     # render the page using the template engine
-    path = os.path.join(os.path.dirname(__file__),'index.html')
+    path = path.join(path.dirname(__file__),'index.html')
     self.response.out.write(template.render(path,template_values))
 
-#### Utilty procedures for generating the output
 
+### Utilty procedures for generating the output
 def WriteToPhone(handler,tag,value):
- 
     handler.response.headers['Content-Type'] = 'application/jsonrequest'
-    json.dump(["VALUE", tag, value], handler.response.out)
+    dump(["VALUE", tag, value], handler.response.out)
 
 def WriteToWeb(handler, tag,value):
     entries = db.GqlQuery("SELECT * FROM StoredData ORDER BY date desc")
     template_values={"result":  value,"entryList":entries}  
-    path = os.path.join(os.path.dirname(__file__),'index.html')
+    path = path.join(path.dirname(__file__),'index.html')
     handler.response.out.write(template.render(path,template_values))
 
 def WriteToPhoneAfterStore(handler,tag, value):
     handler.response.headers['Content-Type'] = 'application/jsonrequest'
-    json.dump(["STORED", tag, value], handler.response.out)
+    dump(["STORED", tag, value], handler.response.out)
 
 
-
-
-# db utilities from Dean
-
+### db utilities from Dean
 ### A utility that guards against attempts to delete a non-existent object
 def dbSafeDelete(key):
   if db.get(key) :	db.delete(key)
@@ -143,7 +134,8 @@ def store(tag, value, bCheckIfTagExists=True):
 		entry = db.GqlQuery("SELECT * FROM StoredData where tag = :1", tag).get()
 		if entry:
 		  entry.value = value
-		else: entry = StoredData(tag = tag, value = value)
+		else: 
+          entry = StoredData(tag = tag, value = value)
 	else:
 		entry = StoredData(tag = tag, value = value)
 	entry.put()		
@@ -156,7 +148,6 @@ def trimdb():
 		for i in range(entries.count() - max_entries): 
 			db.delete(entries.get())
 
-from htmlentitydefs import name2codepoint 
 def replace_entities(match):
     try:
         ent = match.group(1)
@@ -169,7 +160,7 @@ def replace_entities(match):
     except:
         return match.group()
 
-entity_re = re.compile(r'&(#?[A-Za-z0-9]+?);')
+entity_re = compile(r'&(#?[A-Za-z0-9]+?);')
 
 def html_unescape(data):
     return entity_re.sub(replace_entities, data)
@@ -205,16 +196,11 @@ def ProcessNode(node, sPath):
 def DeleteUrl(sUrl):
 	entries = StoredData.all().filter('tag >=', sUrl).filter('tag <', sUrl + u'\ufffd')
 	db.delete(entries[:500])
-  
+
 
 ### Assign the classes to the URL's
-
-app = webapp2.WSGIApplication ([('/', MainPage),
-                           ('/getvalue', GetValueHandler),
-			   ('/storeavalue', StoreAValue),
-		           ('/deleteentry', DeleteEntry)
-
-                           ])
-
-
-
+app = WSGIApplication ([('/', MainPage),
+                        ('/getvalue', GetValueHandler),
+                        ('/storeavalue', StoreAValue),
+                        ('/deleteentry', DeleteEntry)
+                        ])

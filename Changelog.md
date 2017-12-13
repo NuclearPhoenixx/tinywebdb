@@ -1,7 +1,7 @@
 # Changelog:
 
 v6 (6 October 2017)
-* Removed precompiled trash (not used at all)
+* Removed precompiled files (not used at all)
 * Fixed branding URL
 
 v.5 (1 September 2017)

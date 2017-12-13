@@ -3,22 +3,20 @@
 
 These are the files necessary for running a custom TinyWebDB for the MIT AppInventor 2.
 
-
 ## Requirements
 
+These files do not run on a normal webserver - you would need to have a python framework with Django running. In additon they depend on some Google App Engine and Webapp libraries.
 
-These files do not run on a normal webserver - you will need to have a python framework with Django running.
-They are specifically intended to run on a Google App Engine Server, just like the original code from MIT.
+They are specifically intended to run on a Google App Engine Server, just like the original code by the App Inventor guys from MIT.
 
-If you want to use Google App Engine's infrastructure, you will also need the Google App Engine SDK for python and a Google Cloud Console account. You'll have to edit the files according to your needs and then upload the files with the SDK software. You can find a tutorial here: <a href="http://appinventor.mit.edu/explore/content/custom-tinywebdb-service.html">http://appinventor.mit.edu/explore/content/custom-tinywebdb-service.html</a>.
+If you want to use Google App Engine's infrastructure, you will also need the Google App Engine SDK for python and a Google Cloud Console account. You'll have to edit the files according to your needs and then upload the files with the SDK software. You can find a tutorial here: [http://appinventor.mit.edu/explore/content/custom-tinywebdb-service.html](http://appinventor.mit.edu/explore/content/custom-tinywebdb-service.html).
 
+**Python version: 2.7 (latest compatible version)**
 
-#### Python version: 2.7 (latest compatible version)
+**Django version: 1.11 (latest version)**
 
-#### Django version: 1.11 (latest version)
-
--------------------------
-## Hint
+---
+## Directories
 
 ```TinyWebDB``` let's you run the service with a web interface, but be careful since everyone knowing the URL could easily alter your data!
 
