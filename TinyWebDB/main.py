@@ -52,6 +52,7 @@ class StoreAValue(RequestHandler):
 	tag = self.request.get('tag')
 	value = self.request.get('value')
 	self.store_a_value(tag, value)
+	self.redirect('/')
 
 
 class DeleteEntry(RequestHandler):
