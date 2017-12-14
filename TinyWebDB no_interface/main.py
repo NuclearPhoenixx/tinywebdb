@@ -41,7 +41,7 @@ class StoreAValue(RequestHandler):
 	## the message (other than to note that it was received), but other
 	## components might use this.
 	result = ["STORED", tag, value]
-	WriteToPhoneAfterStore(self,tag,value)
+	WriteToAppAfterStore(self,tag,value)
 
   def post(self):
 	tag = self.request.get('tag')
@@ -58,7 +58,7 @@ class GetValueHandler(RequestHandler):
     else:
         value = ""
   
-    WriteToPhone(self,tag,value)
+    WriteToApp(self,tag,value)
 
   def post(self):
     tag = self.request.get('tag')
@@ -73,11 +73,11 @@ class MainPage(RequestHandler):
 	self.response.out.write(template.render(path, 1))
 
 ### Utilty procedures for generating the output
-def WriteToPhone(handler,tag,value):
+def WriteToApp(handler,tag,value):
     handler.response.headers['Content-Type'] = 'application/jsonrequest'
     dump(["VALUE", tag, value], handler.response.out)
 
-def WriteToPhoneAfterStore(handler,tag, value):
+def WriteToAppAfterStore(handler,tag, value):
     handler.response.headers['Content-Type'] = 'application/jsonrequest'
     dump(["STORED", tag, value], handler.response.out)
 

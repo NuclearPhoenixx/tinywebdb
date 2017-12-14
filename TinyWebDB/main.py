@@ -46,7 +46,7 @@ class StoreAValue(RequestHandler):
 	if self.request.get('fmt') == "html":
 		WriteToWeb(self,tag,value)
 	else:
-		WriteToPhoneAfterStore(self,tag,value)
+		WriteToAppAfterStore(self,tag,value)
 
   def post(self):
 	tag = self.request.get('tag')
@@ -79,7 +79,7 @@ class GetValueHandler(RequestHandler):
     if self.request.get('fmt') == "html":
     	WriteToWeb(self,tag,value )
     else:
-        WriteToPhone(self,tag,value)
+        WriteToApp(self,tag,value)
 
   def post(self):
     tag = self.request.get('tag')
@@ -104,7 +104,7 @@ class MainPage(RequestHandler):
 
 
 ### Utilty procedures for generating the output
-def WriteToPhone(handler,tag,value):
+def WriteToApp(handler,tag,value):
     handler.response.headers['Content-Type'] = 'application/jsonrequest'
     dump(["VALUE", tag, value], handler.response.out)
 
@@ -114,7 +114,7 @@ def WriteToWeb(handler, tag,value):
     path = Path.join(Path.dirname(__file__),'index.html')
     handler.response.out.write(template.render(path,template_values))
 
-def WriteToPhoneAfterStore(handler,tag, value):
+def WriteToAppAfterStore(handler,tag, value):
     handler.response.headers['Content-Type'] = 'application/jsonrequest'
     dump(["STORED", tag, value], handler.response.out)
 
