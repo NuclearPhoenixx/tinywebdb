@@ -1,20 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 	<style type="text/css">
-		body{margin-left:5%;margin-right:5%;margin-top:2%;font-family:verdana,sans-serif,arial}
+
+		body{
+            margin-left:5%;
+            margin-right:5%;
+            margin-top:2%;
+            font-family:sans-serif}
+
 		ul{list-style:disc}
+
 		a{text-decoration:none}
+
 		a:hover{text-decoration:underline}
+
+		footer{
+            position:fixed;
+            bottom:5px;
+            float:left}
+
+    .spacer{margin-bottom:6%}
+
+		#formdelete{
+            background-color: red;
+            color:white}
+
 	</style>
-	<title>TinyWebDB</title>
+
+	<title>Custom TinyWebDB</title>
 	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
+
 </head>
 <body>
+
 	<h2><u>Custom TinyWebDB</u></h2>
 	<br>
 	<p><b>This is your custom TinyWebDB for AppInventor 2!</b></p>
-	<br><br><br><br><br><br>
+	<br>
+	<p><b>Warning: This web administration interface is not secure!</b></p>
+  <p>Anybody could easily alter your entries, that's why this is only recommended for testing purposes.</p>
+	<br class=spacer>
+
 	<h3>GET TAG</h3>
     <form action="/getvalue" method="post" enctype=application/x-www-form-urlencoded>
        <p>Tag:<input type="text" name="tag" size="30"/></p>
@@ -22,11 +50,11 @@
        <input type="submit" value="Get value">
     </form>
 	<br>
-	
-    TAG VALUE: 
+
+    TAG VALUE:
 	<b>{{result}}</b>
 	<br><br><hr><br>
-	
+
 	<h3>STORE VALUE</h3>
 	<form action="/storeavalue" method="post"
 		  enctype=application/x-www-form-urlencoded>
@@ -35,7 +63,9 @@
 	   <input type="hidden" name="fmt" value="html">
 	   <input type="submit" value="Store Value">
 	</form>
+
 	<br><hr><br>
+
 	<table border=3>
 	  <tr>
 		 <th>Tag</th>
@@ -52,16 +82,17 @@
 			<input type="hidden" name="entry_key_string" value="{{entry.key}}">
 			<input type="hidden" name="tag" value="{{entry.tag}}">
 			<input type="hidden" name="fmt" value="html">
-			<input type="submit" style="background-color: red" value="Delete">
+			<input type="submit" id=formdelete value="Delete">
 			</form>
 		</td>
 	  </tr>
 	  {% endfor %}
 	</table>
-	
-	<br><br><br><br><br><br>
-	<div style="position:absolute;bottom:5px;float:left">
-		<a href="//github.com/phoenix1747/tinywebdb">Version 6</a> | 2017 ~ Powered by <a href="//phoenix1747.github.io">Phoenix1747</a>.
-	</div>
+
+	<br class=spacer>
+	<footer>
+		<a href="//github.com/Phoenix1747/tinywebdb">Version 7</a> | 2017 ~ Powered by <a href="//phoenix1747.github.io">Phoenix1747</a>.
+	</footer>
+
 </body>
 </html>
