@@ -1,5 +1,13 @@
 # Changelog:
 
+v8 (17 December 2017)
+* Removed Django library, because it was not used
+
+v7 (1 December 2017)
+* Cleaned up code
+* Removed unused modules
+* Optimizations for ```TinyWebDB no_interface```
+
 v6 (6 October 2017)
 * Removed precompiled trash (not used at all)
 * Fixed branding URL
