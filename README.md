@@ -5,7 +5,7 @@ These are the files necessary for running a custom TinyWebDB for the MIT AppInve
 
 ## Requirements
 
-These files do not run on a normal webserver - you would need to have a python framework with Django running. In additon they depend on some Google App Engine and Webapp libraries.
+These files do not run on a normal webserver - you would need to have a python framework running. More specifically they depend on some Google App Engine and Webapp libraries.
 
 They are specifically intended to run on a Google App Engine Server, just like the original code by the App Inventor guys from MIT.
 
