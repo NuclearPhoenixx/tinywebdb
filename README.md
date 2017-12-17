@@ -11,9 +11,7 @@ They are specifically intended to run on a Google App Engine Server, just like t
 
 If you want to use Google App Engine's infrastructure, you will also need the Google App Engine SDK for python and a Google Cloud Console account. You'll have to edit the files according to your needs and then upload the files with the SDK software. You can find a tutorial here: [http://appinventor.mit.edu/explore/content/custom-tinywebdb-service.html](http://appinventor.mit.edu/explore/content/custom-tinywebdb-service.html).
 
-**Python version: 2.7 (latest compatible version)**
-
-**Django version: 1.11 (latest version)**
+**Python version: 2.7 (latest standard env version)**
 
 ---
 
