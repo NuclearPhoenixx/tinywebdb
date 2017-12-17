@@ -1,12 +1,8 @@
 application: custom-tinywebdb
-version: 7
-runtime: python27
+version: 8
+runtime: python
 api_version: 1
 threadsafe: true
-
-libraries:
-- name: django
-  version: "1.11"
 
 handlers:
 - url: /images
