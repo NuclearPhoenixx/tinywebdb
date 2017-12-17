@@ -8,7 +8,6 @@
 ### Maintainer: Phoenix1747 on GitHub
 ###
 ### Note-- updated for use with Python2.7 in App Engine, June 2013
-### Note-- updated for use with Django 1.11 in App Engine, September 2017
 ###
 from webapp2 import RequestHandler, WSGIApplication
 from google.appengine.ext import db
