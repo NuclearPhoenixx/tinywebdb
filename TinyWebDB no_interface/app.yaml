@@ -1,6 +1,6 @@
 application: custom-tinywebdb-nointerface
 version: 8
-runtime: python
+runtime: python27
 api_version: 1
 threadsafe: true
 
