@@ -35,7 +35,7 @@ class StoreAValue(RequestHandler):
   	store(tag, value)
 	# call trimdb if you want to limit the size of db
   	# trimdb()
-	
+
 	## Send back a confirmation message.  The TinyWebDB component ignores
 	## the message (other than to note that it was received), but other
 	## components might use this.
@@ -56,7 +56,7 @@ class GetValueHandler(RequestHandler):
         value = entry.value
     else:
         value = ""
-  
+
     WriteToApp(self,tag,value)
 
   def post(self):
@@ -81,7 +81,7 @@ def WriteToAppAfterStore(handler,tag, value):
     dump(["STORED", tag, value], handler.response.out)
 
 
-### db utilities from Dean  
+### db utilities from Dean
 def store(tag, value, bCheckIfTagExists=True):
 	if bCheckIfTagExists:
 		# There's a potential readers/writers error here :(
@@ -90,14 +90,14 @@ def store(tag, value, bCheckIfTagExists=True):
 		  entry.value = value
 		else: entry = StoredData(tag = tag, value = value)
 	else: entry = StoredData(tag = tag, value = value)
-	entry.put()		
+	entry.put()
 
 def trimdb():
 	## If there are more than the max number of entries, flush the
 	## earliest entries.
 	entries = db.GqlQuery("SELECT * FROM StoredData ORDER BY date")
 	if (entries.count() > max_entries):
-		for i in range(entries.count() - max_entries): 
+		for i in range(entries.count() - max_entries):
 			db.delete(entries.get())
 
 def replace_entities(match):
@@ -116,7 +116,7 @@ entity_re = compile(r'&(#?[A-Za-z0-9]+?);')
 
 def html_unescape(data):
     return entity_re.sub(replace_entities, data)
-    
+
 def ProcessNode(node, sPath):
 	entries = []
 	if node.nodeType == minidom.Node.ELEMENT_NODE:
@@ -132,7 +132,7 @@ def ProcessNode(node, sPath):
 		for attr in node.attributes.values():
 			if len(attr.value.strip()) > 0:
 				entries.append(StoredData(tag = sPath + ">" + attr.name, value = attr.value))
-		
+
 		childCounts = {}
 		for childNode in node.childNodes:
 			if childNode.nodeType == minidom.Node.ELEMENT_NODE:
@@ -149,5 +149,4 @@ def ProcessNode(node, sPath):
 ### Assign the classes to the URL's
 app = WSGIApplication ([('/', MainPage),
 						('/getvalue', GetValueHandler),
-                        ('/storeavalue', StoreAValue)
-                        ])
+                        ('/storeavalue', StoreAValue)])
