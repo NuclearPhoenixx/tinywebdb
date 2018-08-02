@@ -1,5 +1,5 @@
 # tinywebdb
-![GitHub last commit](https://img.shields.io/github/last-commit/phoenix1747/tinywebdb.svg?style=flat-square) ![open issues](https://img.shields.io/github/issues-raw/phoenix1747/tinywebdb.svg?style=flat-square) ![license](https://img.shields.io/github/license/phoenix1747/tinywebdb.svg?style=flat-square)
+![GitHub last commit](https://img.shields.io/github/last-commit/phoenix1747/tinywebdb.svg?style=for-the-badge) ![open issues](https://img.shields.io/github/issues-raw/phoenix1747/tinywebdb.svg?style=for-the-badge) ![license](https://img.shields.io/github/license/phoenix1747/tinywebdb.svg?style=for-the-badge)
 
 These are the files necessary for running a custom TinyWebDB for the MIT AppInventor 2.
 
